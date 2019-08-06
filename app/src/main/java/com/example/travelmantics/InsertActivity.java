@@ -26,6 +26,7 @@ public class InsertActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
+
         txtTitle = findViewById(R.id.txt_title);
         txtPrice = findViewById(R.id.txt_price);
         txtDescription = findViewById(R.id.txt_description);
@@ -33,7 +34,7 @@ public class InsertActivity extends AppCompatActivity {
 
         // Write a message to the database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("message");
+        mDatabaseReference = mFirebaseDatabase.getReference("traveldeals");
 
 
     }
