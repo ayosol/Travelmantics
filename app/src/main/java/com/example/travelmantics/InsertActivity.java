@@ -1,38 +1,40 @@
 package com.example.travelmantics;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class InsertActivity extends AppCompatActivity {
 
-    DatabaseReference myRef;
-    FirebaseDatabase database;
+    EditText txtTitle;
+    EditText txtPrice;
+    EditText txtDescription;
+    Button btn_selectImage;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
-
-        Button btn_test = findViewById(R.id.btn_image_select);
+        txtTitle = findViewById(R.id.txt_title);
+        txtPrice = findViewById(R.id.txt_price);
+        txtDescription = findViewById(R.id.txt_description);
+        btn_selectImage = findViewById(R.id.btn_image_select);
 
         // Write a message to the database
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("message");
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference("message");
 
-        myRef.setValue("I hope it works!");
 
     }
 
@@ -43,24 +45,36 @@ public class InsertActivity extends AppCompatActivity {
         return true;
     }
 
-    public void testRead(View view) {
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d( "Data change is working", "Value is: " + value);
-                EditText txt_test = findViewById(R.id.txt_title);
-                txt_test.setText(value);
-            }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save_menu:
+                saveDeal();
+                Toast.makeText(InsertActivity.this, "Deal saved", Toast.LENGTH_LONG).show();
+                clean();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("DataFailed: ", "Failed to read value.", error.toException());
-            }
-        });
     }
+
+    private void clean() {
+        txtTitle.setText("");
+        txtDescription.setText("");
+        txtPrice.setText("");
+        txtTitle.requestFocus();
+    }
+
+    private void saveDeal() {
+        String title = txtTitle.getText().toString();
+        String price = txtPrice.getText().toString();
+        String description = txtDescription.getText().toString();
+
+        TravelDeal deal = new TravelDeal(title, description, price, "");
+        mDatabaseReference.push().setValue(deal);
+
+
+    }
+
 }

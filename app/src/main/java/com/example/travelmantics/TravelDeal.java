@@ -12,6 +12,17 @@ public class TravelDeal implements Serializable {
 
     public TravelDeal(){}
 
+    //Test constructor
+    public TravelDeal(String title, String description, String price, String imageUrl) {
+        this.setId(id);
+        this.setTitle(title);
+        this.setDescription(description);
+        this.setPrice(price);
+        this.setImageUrl(imageUrl);
+    }
+    //Test ends here
+
+
     public TravelDeal(String title, String description, String price, String imageUrl, String imageName) {
         this.setId(id);
         this.setTitle(title);
