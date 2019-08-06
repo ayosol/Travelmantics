@@ -33,9 +33,9 @@ public class InsertActivity extends AppCompatActivity {
         btn_selectImage = findViewById(R.id.btn_image_select);
 
         // Write a message to the database
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("traveldeals");
-
+        FirebaseUtil.openFbReference("traveldeals");
+        mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
+        mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
     }
 
