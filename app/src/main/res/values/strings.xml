@@ -3,6 +3,6 @@
     <string name="deal_title">Enter Deal Title Here</string>
     <string name="hint_price">Enter Price Here</string>
     <string name="select_image">Select Image</string>
-    <string name="save_menu">save</string>
-    <string name="delete_deal">delete deal</string>
+    <string name="save_menu">Save</string>
+    <string name="delete_deal">Delete Deal</string>
 </resources>

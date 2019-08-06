@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InsertActivity">
+    tools:context=".DealActivity">
 
 
     <EditText
@@ -12,15 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:autofillHints=""
         android:ems="16"
         android:hint="@string/deal_title"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txt_price"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_description" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageSelect"
         android:layout_width="0dp"
         android:layout_height="290dp"
         android:layout_marginStart="16dp"

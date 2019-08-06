@@ -1,5 +1,6 @@
 package com.example.travelmantics;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,19 +14,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class InsertActivity extends AppCompatActivity {
+public class DealActivity extends AppCompatActivity {
 
     EditText txtTitle;
     EditText txtPrice;
     EditText txtDescription;
     Button btn_selectImage;
+    TravelDeal deal;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insert);
+        setContentView(R.layout.activity_deal);
 
         txtTitle = findViewById(R.id.txt_title);
         txtPrice = findViewById(R.id.txt_price);
@@ -36,6 +38,17 @@ public class InsertActivity extends AppCompatActivity {
         FirebaseUtil.openFbReference("traveldeals");
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
+
+        Intent intent = getIntent();
+        TravelDeal deal = (TravelDeal) intent.getSerializableExtra("Deal");
+        if (deal == null) {
+            deal = new TravelDeal();
+        }
+
+        this.deal = deal;
+        txtTitle.setText(deal.getTitle());
+        txtDescription.setText(deal.getDescription());
+        txtPrice.setText(deal.getPrice());
 
     }
 
@@ -51,9 +64,16 @@ public class InsertActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.save_menu:
                 saveDeal();
-                Toast.makeText(InsertActivity.this, "Deal saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(DealActivity.this, "Deal saved", Toast.LENGTH_LONG).show();
                 clean();
+                backToList();
                 return true;
+
+            case R.id.delete_menu:
+                deleteDeal();
+                backToList();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -68,14 +88,27 @@ public class InsertActivity extends AppCompatActivity {
     }
 
     private void saveDeal() {
-        String title = txtTitle.getText().toString();
-        String price = txtPrice.getText().toString();
-        String description = txtDescription.getText().toString();
+        deal.setTitle(txtTitle.getText().toString());
+        deal.setPrice(txtPrice.getText().toString());
+        deal.setDescription(txtDescription.getText().toString());
+        if (deal.getId() == null) {
+            mDatabaseReference.push().setValue(deal);
+        } else {
+            mDatabaseReference.child(deal.getId()).setValue(deal);
+        }
+    }
 
-        TravelDeal deal = new TravelDeal(title, description, price, "");
-        mDatabaseReference.push().setValue(deal);
+    private void deleteDeal() {
+        if (deal == null) {
+            Toast.makeText(this, "Please save deal before Deleting", Toast.LENGTH_LONG).show();
+            return;
+        }
+        mDatabaseReference.child(deal.getId()).removeValue();
+    }
 
-
+    private void backToList() {
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
     }
 
 }
