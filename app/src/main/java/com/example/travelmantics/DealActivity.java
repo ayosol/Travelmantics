@@ -35,7 +35,6 @@ public class DealActivity extends AppCompatActivity {
         btn_selectImage = findViewById(R.id.btn_image_select);
 
         // Write a message to the database
-        FirebaseUtil.openFbReference("traveldeals");
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
