@@ -1,28 +1,33 @@
 package com.example.travelmantics;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
 
 public class DealActivity extends AppCompatActivity {
 
     EditText txtTitle;
     EditText txtPrice;
     EditText txtDescription;
-    Button btn_selectImage;
+    private static final int PICTURE_RESULT = 42;
     TravelDeal deal;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    Button btn_uploadImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,17 @@ public class DealActivity extends AppCompatActivity {
         txtTitle = findViewById(R.id.txt_title);
         txtPrice = findViewById(R.id.txt_price);
         txtDescription = findViewById(R.id.txt_description);
-        btn_selectImage = findViewById(R.id.btn_image_select);
+
+        btn_uploadImage = findViewById(R.id.btn_image_select);
+        btn_uploadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Insert Picture"), PICTURE_RESULT);
+            }
+        });
 
         // Write a message to the database
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
@@ -66,6 +81,16 @@ public class DealActivity extends AppCompatActivity {
             enableEditText(false);
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICTURE_RESULT && resultCode == RESULT_OK) {
+            Uri imageUri = data.getData();
+            StorageReference ref = FirebaseUtil.mStorageRef.child(imageUri.getLastPathSegment());
+            ref.putFile(imageUri);
+        }
     }
 
     @Override

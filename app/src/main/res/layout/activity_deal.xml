@@ -59,14 +59,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/select_image"
+        android:text="@string/upload_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_description" />
 
     <ImageView
-        android:id="@+id/imageSelect"
+        android:id="@+id/deal_image"
         android:layout_width="0dp"
         android:layout_height="290dp"
         android:layout_marginStart="16dp"
@@ -77,6 +77,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_image_select"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@android:color/transparent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

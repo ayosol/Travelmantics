@@ -2,7 +2,7 @@
     <string name="app_name">Travelmantics</string>
     <string name="deal_title">Enter Deal Title Here</string>
     <string name="hint_price">Enter Price Here</string>
-    <string name="select_image">Select Image</string>
+    <string name="upload_image">Upload Image</string>
     <string name="save_menu">Save</string>
     <string name="delete_deal">Delete Deal</string>
 </resources>
