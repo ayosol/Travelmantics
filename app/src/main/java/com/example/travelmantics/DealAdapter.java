@@ -90,7 +90,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         if (url != null && url.isEmpty() == false) {
             Picasso.get()
                     .load(url)
-                    .resize(80, 80)
+                    .resize(160, 160)
                     .centerCrop()
                     .into(imageDeal);
         }
@@ -123,7 +123,6 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         public void onClick(View view) {
             //Get position of item that was clicked
             int position = getAdapterPosition();
-            Log.d("Click", String.valueOf(position));
             TravelDeal selectedDeal = deals.get(position);
             Intent intent = new Intent(view.getContext(), DealActivity.class);
             intent.putExtra("Deal", selectedDeal);

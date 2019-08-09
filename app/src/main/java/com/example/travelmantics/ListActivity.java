@@ -2,7 +2,6 @@ package com.example.travelmantics;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,7 +50,6 @@ public class ListActivity extends AppCompatActivity {
                         .signOut(this)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             public void onComplete(@NonNull Task<Void> task) {
-                                Log.d("Logout", "User is Logged out");
                                 FirebaseUtil.attachListener();
                             }
                         });
@@ -74,7 +72,6 @@ public class ListActivity extends AppCompatActivity {
         RecyclerView rvDeals = findViewById(R.id.rv_deals);
         final DealAdapter adapter = new DealAdapter();
         rvDeals.setAdapter(adapter);
-        Log.d("Test 1: ", "Before Layout Manager");
         LinearLayoutManager dealsLayoutManger =
                 new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rvDeals.setLayoutManager(dealsLayoutManger);
